@@ -14,6 +14,17 @@ void get_s_l(int p[], int s[][6], int l[][6], int n){
 		}
 	}
 }
+//
+int get_min(int p[], int s, int n){
+	if (s == n) return 0;
+	if (s == n - 1) return p[s] * p[s + 1] * p[n + 1];
+	int min = get_min(p, s + 1, n) + p[s] * p[s + 1] * p[n + 1];
+	for (int i = s + 1; i < n; i++){
+		int temp = get_min(p, s, i) + get_min(p, i + 1, n) + p[s] * p[i + 1] * p[n + 1];
+		if (temp < min) min = temp;
+	} 
+	return min;
+}
 void print(int l[][6], int s, int n){
     if (s == n) {
         cout << "A" << s;
@@ -32,6 +43,7 @@ int main (){
 	int s[6][6];
 	int l[6][6];
 	//
+	cout << get_min(p, 0, 5) << endl;
 	get_s_l(p, s, l, n);
 	print(l, 0, 5);
 	cout << endl << "最少需要乘法次数："<< s[0][5] << endl;
